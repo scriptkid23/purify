@@ -285,6 +285,7 @@ const App = () => {
             }}>
             {item.id}
           </Text>
+		  <Text>huydz<Text>
         </View>
       </TouchableHighlight>
     );
