@@ -38,6 +38,7 @@ const App = () => {
   const [data, setData] = useState('');
 
   const startScan = () => {
+    console.log("START SCAN");
     if (!isScanning) {
       BleManager.scan(['4fafc201-1fb5-459e-8fcc-c5c9c331914b'], 3, true)
         .then((results) => {
