@@ -4,7 +4,7 @@
  * @format
  * @flow strict-local
  */
-
+import MQTTConnection from './src/components/MQTTConnection';
 import React, {useState, useEffect} from 'react';
 import {Buffer} from 'buffer';
 import {TextDecoder} from 'text-decoding';
@@ -191,6 +191,9 @@ const App = () => {
       handleUpdateValueForCharacteristic,
     );
 
+
+
+
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -210,8 +213,34 @@ const App = () => {
         }
       });
     }
+    this.mqttConnect = new MQTTConnection()
+    this.mqttConnect.onMQTTConnect = this.onMQTTConnect
+    this.mqttConnect.onMQTTLost = this.onMQTTLost
+    this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
+    this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered
+    this.mqttConnect.connect("broker.emqx.io",8083)
+    onMQTTConnect = () => {
+        console.log('App onMQTTConnect')
+        this.mqttConnect.subscribeChannel('huydz')
+    }
+
+    onMQTTLost = () => {
+        console.log('App onMQTTLost')
+    }
+
+    onMQTTMessageArrived = (message) => {
+        console.log('App onMQTTMessageArrived: ', message);
+        console.log('App onMQTTMessageArrived payloadString: ', message.payloadString);
+    }
+
+    onMQTTMessageDelivered = (message) => {
+        console.log('App onMQTTMessageDelivered: ', message);
+    }
+
+
 
     return () => {
+      this.mqttConnect.close()
       console.log('unmount');
       bleManagerEmitter.removeEventListener(
         'BleManagerDiscoverPeripheral',
@@ -230,6 +259,11 @@ const App = () => {
         handleUpdateValueForCharacteristic,
       );
     };
+
+/////
+   
+
+
   }, []);
   const [flag, setFlag] = useState(false);
   useEffect(() => {
@@ -361,7 +395,11 @@ const App = () => {
             <View style={{marginBottom: 10}}></View>
             <Button title={'Turn On'} onPress={() => turnOn()} />
           </View>
-
+          <Text>react_native_mqtt</Text>
+      <Button
+        title="send data to chainel huydz "
+        onPress={() => this.mqttConnect.send('huydz',"message form huydz")}
+      />
           {list.length == 0 && (
             <View style={{flex: 1, margin: 20}}>
               <Text style={{textAlign: 'center'}}>No peripherals</Text>
