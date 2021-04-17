@@ -54,7 +54,7 @@ DeleteAlll=()=>{
     };
     InserObjext=()=>{
         const newTodoList ={
-            id:Math.floor(Date.now()/1000),
+            id: Math.floor((Date.now()*10+ Math.floor((Math.random() * 10) + 1))/1000),
            value:"huydz11111111111111",
             done:false
 
