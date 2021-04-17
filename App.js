@@ -338,7 +338,11 @@ const App = () => {
 
   const [flag, setFlag] = useState(false);
   useEffect(() => {
-
+   this.unsubscribe = NetInfo.addEventListener(state => {
+    
+      setconnected(state.isConnected);
+     
+    });
    
     if (flag) {
       console.log('GET DATA TURN ON');
@@ -367,7 +371,8 @@ const App = () => {
     
   });
   useEffect(() => {
-
+    reloadData();
+    console.log(conncected);
     if(DbList.length>1&&conncected){
      
      
