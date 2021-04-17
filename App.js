@@ -471,6 +471,7 @@ const App = () => {
     <SafeAreaView>
    
       <ScrollView
+      pagingEnabled={true}
       horizontal={true}
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
@@ -479,7 +480,7 @@ const App = () => {
             <Text style={styles.footer}>Engine: Hermes</Text>
           </View>
         )}
-        <View style={styles.body} width={screenwidth}>
+        <View style={styles.body} width={screenwidth} height={screenheight}>
           <View style={{margin: 10}}>
             <Button
               title={'Scan Bluetooth (' + (isScanning ? 'on' : 'off') + ')'}
@@ -524,7 +525,7 @@ const App = () => {
             </View>
           )}
         </View>
-        <View width={screenwidth}>
+        <View width={screenwidth} height={screenheight}>
        <Text>kiểm tra kết nối : {conncected?'có kết nối ':'không '}</Text>
    
        <WaitList/>
