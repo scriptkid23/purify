@@ -4,6 +4,11 @@
  * @format
  * @flow strict-local
  */
+
+ import NetInfo from "@react-native-community/netinfo";
+ import {insertObject,queryALLTodoList,Deleteall} from './src/components/database/database';
+import TodoListComponent from './src/components/WaitList'
+import WaitList from './src/components/WaitList'
 import MQTTConnection from './src/components/MQTTConnection';
 import React, {useState, useEffect} from 'react';
 import {Buffer} from 'buffer';
@@ -23,6 +28,7 @@ import {
   PermissionsAndroid,
   FlatList,
   TouchableHighlight,
+  Dimensions
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -32,10 +38,14 @@ const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 
 const App = () => {
+
   const [isScanning, setIsScanning] = useState(false);
   const peripherals = new Map();
   const [list, setList] = useState([]);
   const [data, setData] = useState('');
+  const [conncected,setconnected]=useState(false);
+  const [DbList,setDbList]=useState([]);
+  const [bt,setbt]=useState(false);
 
   const startScan = () => {
     if (!isScanning) {
@@ -174,7 +184,42 @@ const App = () => {
     }
   };
 
+  const reloadData=()=>{
+    queryALLTodoList().then((todoLists)=>{
+     
+    console.log(todoLists);
+   setDbList(todoLists);
+   
+  
+  }).catch((error)=>{
+    setDbList([]);
+         console.log(error);
+        
+});
+   
+ }
+
+ DeleteAlll=()=>{
+  Deleteall().then(()=>{
+    setDbList([]);
+      console.log("xóa thành công");
+     
+  }).catch((error)=>{
+      console.log(error);
+  })
+ };
+
+ 
+ 
+ 
+ 
+ unsubscribe=null;
   useEffect(() => {
+   
+    
+  
+
+
     BleManager.start({showAlert: false});
 
     bleManagerEmitter.addListener(
@@ -213,6 +258,7 @@ const App = () => {
         }
       });
     }
+    
     this.mqttConnect = new MQTTConnection()
     this.mqttConnect.onMQTTConnect = this.onMQTTConnect
     this.mqttConnect.onMQTTLost = this.onMQTTLost
@@ -237,10 +283,22 @@ const App = () => {
         console.log('App onMQTTMessageDelivered: ', message);
     }
 
-
-
+     this.unsubscribe = NetInfo.addEventListener(state => {
+    
+      setconnected(state.isConnected);
+     
+    });
+    reloadData();
+   
+    console.log();
+  
+    console.log(DbList);
+    
     return () => {
-      this.mqttConnect.close()
+      
+       this.unsubscribe&&this.unsubscribe();
+
+      this.mqttConnect.close();
       console.log('unmount');
       bleManagerEmitter.removeEventListener(
         'BleManagerDiscoverPeripheral',
@@ -265,8 +323,11 @@ const App = () => {
 
 
   }, []);
+
   const [flag, setFlag] = useState(false);
   useEffect(() => {
+
+   
     if (flag) {
       console.log('GET DATA TURN ON');
       async function getDataFromServer() {
@@ -283,8 +344,32 @@ const App = () => {
         setData(utf8decoder.decode(utf8Arr));
       }
       getDataFromServer();
+      
     }
+   
+    
   });
+  useEffect(() => {
+
+    if(DbList.length>1&&conncected){
+     
+     
+    
+      DbList.forEach((element) => {
+        console.log(element.value);
+        this.mqttConnect.send('huydz',element.value);
+        
+      });
+
+
+      DeleteAlll();
+    
+     
+    }
+   
+   
+    
+  },[conncected]);
 
   const renderItem = (item) => {
     const color = item.connected ? 'green' : '#fff';
@@ -357,9 +442,14 @@ const App = () => {
       data,
     );
   };
+  let screenwidth=Dimensions.get('window').width;
+  let screenheight=Dimensions.get('window').height;
   return (
+    
     <SafeAreaView>
+   
       <ScrollView
+      horizontal={true}
         contentInsetAdjustmentBehavior="automatic"
         style={styles.scrollView}>
         {global.HermesInternal == null ? null : (
@@ -367,7 +457,7 @@ const App = () => {
             <Text style={styles.footer}>Engine: Hermes</Text>
           </View>
         )}
-        <View style={styles.body}>
+        <View style={styles.body} width={screenwidth}>
           <View style={{margin: 10}}>
             <Button
               title={'Scan Bluetooth (' + (isScanning ? 'on' : 'off') + ')'}
@@ -400,19 +490,39 @@ const App = () => {
         title="send data to chainel huydz "
         onPress={() => this.mqttConnect.send('huydz',"message form huydz")}
       />
+      <Button
+        title="kich hoat gui giu lieu trong db"
+        color={(bt)?"red":"black"}
+        onPress={()=>{setbt(!bt); reloadData();}}
+        //disabled ={(conncected&&DbList)?false:true}
+      />
           {list.length == 0 && (
             <View style={{flex: 1, margin: 20}}>
               <Text style={{textAlign: 'center'}}>No peripherals</Text>
             </View>
           )}
         </View>
+        <View width={screenwidth}>
+       <Text>kiểm tra kết nối : {conncected?'có kết nối ':'không '}</Text>
+   
+       <WaitList/>
+       </View>
       </ScrollView>
+     
       <FlatList
         data={list}
         renderItem={({item}) => renderItem(item)}
         keyExtractor={(item) => item.id}
       />
+     
+  
+    
+    
+
+       
     </SafeAreaView>
+   
+    
   );
 };
 

@@ -39,7 +39,7 @@ export default class MQTTConnection {
         clientID = clientID.slice(0, 23);
         console.log('clientID: ', clientID)// tạo clientId
    console.log(host+' '+port)
-        this.mqtt = new Paho.MQTT.Client("broker.emqx.io",8083,clientID);// kết nối mqtt
+        this.mqtt = new Paho.MQTT.Client(host,port,clientID);// kết nối mqtt
        
         this.mqtt.onConnectionLost = (res) => {
             this.onMQTTLost;
