@@ -209,6 +209,18 @@ const App = () => {
   })
  };
 
+ InsertData=(data)=>{
+  const newTodoList ={
+    id:Math.floor(Date.now()/1000),
+   value:data,
+    done:false
+
+}
+  insertObject(newTodoList).then().catch((error)=>{
+    alert(error);
+});
+ };
+
  
  
  
@@ -342,6 +354,11 @@ const App = () => {
         // return (utf8decoder.decode(utf8Arr));
 
         setData(utf8decoder.decode(utf8Arr));
+        if(conncected){
+          this.mqttConnect.send('huydz',data);
+        }else{
+             InsertData(data);
+        }
       }
       getDataFromServer();
       
