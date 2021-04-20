@@ -44,6 +44,7 @@ const App = () => {
   const [list, setList] = useState([]);
   const [data, setData] = useState('');
   const [conncected,setconnected]=useState(false);
+  const[mqttcn,setmqttcn]=useState(false);
   const [DbList,setDbList]=useState([]);
   const [bt,setbt]=useState(false);
 
@@ -187,7 +188,7 @@ const App = () => {
   const reloadData=()=>{
     queryALLTodoList().then((todoLists)=>{
      
-    console.log(todoLists);
+   
    setDbList(todoLists);
    
   
@@ -271,7 +272,7 @@ const App = () => {
       });
     }
     
-    this.mqttConnect = new MQTTConnection()
+    /*this.mqttConnect = new MQTTConnection()
     this.mqttConnect.onMQTTConnect = this.onMQTTConnect
     this.mqttConnect.onMQTTLost = this.onMQTTLost
     this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
@@ -293,24 +294,21 @@ const App = () => {
 
     onMQTTMessageDelivered = (message) => {
         console.log('App onMQTTMessageDelivered: ', message);
-    }
-
+    }*/
+    
+   
      this.unsubscribe = NetInfo.addEventListener(state => {
     
       setconnected(state.isConnected);
      
     });
-    reloadData();
-   
-    console.log();
   
-    console.log(DbList);
     
     return () => {
       
        this.unsubscribe&&this.unsubscribe();
 
-      this.mqttConnect.close();
+      
       console.log('unmount');
       bleManagerEmitter.removeEventListener(
         'BleManagerDiscoverPeripheral',
@@ -337,13 +335,54 @@ const App = () => {
   }, []);
 
   const [flag, setFlag] = useState(false);
+const mqttConnect=null;
   useEffect(() => {
    this.unsubscribe = NetInfo.addEventListener(state => {
-    
+   
       setconnected(state.isConnected);
      
     });
+    console.log('huydz1 '+mqttcn);
+     
+   if(!conncected){
+     setmqttcn(false);
+   }
+   if(conncected&&!mqttcn){
+    this.mqttConnect = new MQTTConnection()
+    this.mqttConnect.onMQTTConnect = this.onMQTTConnect
+    this.mqttConnect.onMQTTLost = this.onMQTTLost
+    this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
+    this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered
    
+   
+    this.mqttConnect.connect("broker.emqx.io",8083)
+    
+  
+  
+  
+    onMQTTConnect = () => {
+        console.log('App onMQTTConnect')
+        this.mqttConnect.subscribeChannel('huydz')
+        setmqttcn(true);
+       
+    }
+   
+    onMQTTLost = () => {
+        console.log('App onMQTTLost')
+    }
+
+    onMQTTMessageArrived = (message) => {
+        console.log('App onMQTTMessageArrived: ', message);
+        console.log('App onMQTTMessageArrived payloadString: ', message.payloadString);
+    }
+
+    onMQTTMessageDelivered = (message) => {
+        console.log('App onMQTTMessageDelivered: ', message);
+    }
+   
+    console.log('huydz2'+mqttcn);
+  }
+
     if (flag) {
       console.log('GET DATA TURN ON');
       async function getDataFromServer() {
@@ -358,7 +397,7 @@ const App = () => {
         // return (utf8decoder.decode(utf8Arr));
 
         setData(utf8decoder.decode(utf8Arr));
-        if(conncected){
+        if(conncected&&mqttcn){
           this.mqttConnect.send('huydz',data);
         }else{
              InsertData(data);
@@ -368,30 +407,38 @@ const App = () => {
       
     }
    
-    
+  
   });
   useEffect(() => {
+    console.log('12300'+mqttcn);
+   
     reloadData();
-    console.log(conncected);
-    if(DbList.length>1&&conncected){
-     
-     
     
-      DbList.forEach((element) => {
-        console.log(element.value);
-        this.mqttConnect.send('huydz',element.value);
-        
-      });
-
-
-      DeleteAlll();
+   
     
+    
+     if(DbList.length>1&&mqttcn&&conncected){
+      
+      
      
-    }
+       DbList.forEach((element) => {
+         console.log(element.value);
+         this.mqttConnect.send('huydz',element.value);
+         
+       });
+ 
+ 
+       DeleteAlll();
+     
+      
+     }
+  
+
    
    
     
-  },[conncected]);
+    
+  },[mqttcn]);
 
   const renderItem = (item) => {
     const color = item.connected ? 'green' : '#fff';
@@ -511,7 +558,7 @@ const App = () => {
           <Text>react_native_mqtt</Text>
       <Button
         title="send data to chainel huydz "
-        onPress={() => this.mqttConnect.send('huydz',"message form huydz")}
+        onPress={() => {if(conncected) this.mqttConnect.send('huydz',"message form huydz")}}
       />
       <Button
         title="kich hoat gui giu lieu trong db"

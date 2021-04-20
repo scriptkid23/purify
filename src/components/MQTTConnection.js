@@ -62,7 +62,9 @@ export default class MQTTConnection {
         });
       
     }
-
+     getCn(){
+         return this.mqtt.isConnected();
+     }
     onMQTTSuccess = () => {
         this.onMQTTConnect()
     }
@@ -91,6 +93,7 @@ export default class MQTTConnection {
         console.log('MQTTConnection send: ')
         if (!this.mqtt||!this.mqtt.isConnected()) {
            
+           console.log(12);
             return;
         }
 
@@ -105,6 +108,7 @@ export default class MQTTConnection {
         this.mqtt && this.mqtt.disconnect();
         this.mqtt = null;
     }
+    
 
 }
 
