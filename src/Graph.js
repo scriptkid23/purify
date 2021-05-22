@@ -50,8 +50,9 @@ const styles = StyleSheet.create({
 const Graph = () => {
   const translation = useVector();
   const transition = useSharedValue(0);
-  const previous = useSharedValue < GraphIndex > 0;
-  const current = useSharedValue < GraphIndex > 0;
+  const previous = useSharedValue(0);
+  const current = useSharedValue(0);
+
   const animatedProps = useAnimatedProps(() => {
     const previousPath = graphs[previous.value].data.path;
     const currentPath = graphs[current.value].data.path;
