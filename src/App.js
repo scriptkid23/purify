@@ -9,12 +9,12 @@
 import React from 'react';
 
 import {Block} from './components';
-import Home from './screen/Home/Home';
 
+import Rainbow from './Rainbow';
 function App() {
   return (
     <Block>
-      <Home />
+      <Rainbow />
     </Block>
   );
 }
