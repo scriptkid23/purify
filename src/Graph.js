@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {mixPath, useVector} from 'react-native-redash';
+import {mixPath, serialize, useVector} from 'react-native-redash';
 
 import {GraphIndex, graphs, SIZE} from './Model';
 import Header from './Header';
@@ -57,7 +57,7 @@ const Graph = () => {
     const previousPath = graphs[previous.value].data.path;
     const currentPath = graphs[current.value].data.path;
     return {
-      d: mixPath(transition.value, previousPath, currentPath),
+      d:  serialize(previousPath),
     };
   });
   const style = useAnimatedStyle(() => ({
@@ -75,28 +75,6 @@ const Graph = () => {
             strokeWidth={3}
           />
         </Svg>
-        <Cursor translation={translation} index={current} />
-      </View>
-      <View style={styles.selection}>
-        <View style={StyleSheet.absoluteFill}>
-          <Animated.View style={[styles.backgroundSelection, style]} />
-        </View>
-        {graphs.map((graph, index) => {
-          return (
-            <TouchableWithoutFeedback
-              key={graph.label}
-              onPress={() => {
-                previous.value = current.value;
-                transition.value = 0;
-                current.value = index;
-                transition.value = withTiming(1);
-              }}>
-              <Animated.View style={[styles.labelContainer]}>
-                <Text style={styles.label}>{graph.label}</Text>
-              </Animated.View>
-            </TouchableWithoutFeedback>
-          );
-        })}
       </View>
     </View>
   );

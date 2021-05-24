@@ -1,26 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import { Text } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {Block} from './components';
+import {StyleSheet, View, Text} from 'react-native';
+import {LineChart, Grid} from './components/Charts';
+import {Defs, LinearGradient, Stop} from 'react-native-svg';
 
-import Rainbow from './Rainbow';
-function App() {
+const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80];
+
+export default function App() {
+  const Gradient = () => (
+    <Defs key={'gradient'}>
+      <LinearGradient id={'gradient'} x1={'0'} y={'0%'} x2={'100%'} y2={'0%'}>
+        <Stop offset={'0%'} stopColor={'rgb(134, 65, 244)'} />
+        <Stop offset={'100%'} stopColor={'rgb(66, 194, 244)'} />
+      </LinearGradient>
+    </Defs>
+  );
+
   return (
-    <SafeAreaProvider>
-    <Block>
-      <Rainbow />
-      <Text>what is your name</Text>
-    </Block>
-    </SafeAreaProvider>
+    <View>
+      <LineChart
+        style={{height: 200}}
+        data={data}
+        contentInset={{top: 20, bottom: 20}}
+        svg={{
+          strokeWidth: 2,
+          stroke: 'url(#gradient)',
+        }}>
+        <Grid />
+        <Gradient />
+      </LineChart>
+      <Text>Click me</Text>
+    </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

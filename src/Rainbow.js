@@ -16,7 +16,7 @@ const Rainbow = () => {
   return (
     <View style={styles.container}>
       <Graph />
-      <Footer />
+      {/* <Footer /> */}
     </View>
   );
 };

@@ -12,6 +12,7 @@ const values = data.data.prices;
 const POINTS = 60;
 
 const buildGraph = (datapoints, label) => {
+  // console.log(datapoints)
   const priceList = datapoints.prices.slice(0, POINTS);
   const formattedValues = priceList.map(price => [
     parseFloat(price[0]),

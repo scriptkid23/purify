@@ -13,6 +13,7 @@
     "buffer": "^6.0.3",
     "convert-string": "^0.1.0",
     "d3": "^6.7.0",
+    "d3-interpolate-path": "^2.2.3",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-ble-manager": "^7.4.1",
