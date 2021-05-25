@@ -87,8 +87,6 @@ const RealTimeLineGraph = props => {
 };
 
 class App extends React.Component {
-  max = 150;
-  bountry = 80;
   timer;
   constructor(props) {
     super(props);
@@ -96,25 +94,35 @@ class App extends React.Component {
       return 0;
     });
 
-    this.state = {yaxisData, counter: 0};
+    this.state = {
+      max: 150,
+      bountry: 80,
+      yaxisData,
+      counter: 0,
+    };
   }
 
   componentDidMount() {
     this.timer = setInterval(() => {
       const {yaxisData, counter} = this.state;
-      if (yaxisData.length > this.max) {
+      if (yaxisData.length > this.state.max) {
         clearInterval(this.timer);
         return;
       }
-      yaxisData[counter] = this.getRandomInt(this.max);
-      this.setState({yaxisData, counter: counter + 1});
+      if (counter > 10) {
+        yaxisData.shift();
+      }
+      let dta = this.getRandomInt(this.state.max);
+
+      this.setState({yaxisData: [...yaxisData, dta], counter: counter + 1});
     }, 1000);
   }
-
-  
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   getRandomInt = max => {
-    return Math.floor(Math.random() * Math.floor(this.max));
+    return Math.floor(Math.random() * Math.floor(this.state.max));
   };
 
   render() {
@@ -123,8 +131,8 @@ class App extends React.Component {
         <RealTimeLineGraph
           yaxisData={this.state.yaxisData}
           indexToClipFrom={this.state.counter - 1}
-          bountry={this.bountry}
-          yMax={this.max}
+          bountry={this.state.bountry}
+          yMax={this.state.max}
         />
       </View>
     );
