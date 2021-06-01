@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import * as shape from 'd3-shape';
 import {LineChart, Grid, Path, YAxis, XAxis} from './components/Charts';
 import {
   Defs,
@@ -66,6 +67,7 @@ const RealTimeLineGraph = props => {
         />
 
         <LineChart
+          curve={shape.curveNatural}
           style={{flex: 1, marginLeft: 16}}
           yMin={0}
           yMax={yMax}
