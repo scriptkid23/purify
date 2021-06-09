@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 
 import { rgba, mergeTheme } from "./utils";
-import expoTheme from "./theme";
+import expoTheme from "./Theme";
 
 import Block from "./Block";
 

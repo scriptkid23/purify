@@ -9,12 +9,16 @@
 import React from 'react';
 
 import {Block} from './components';
-import Home from './screen/Home/Home';
+import Home from './screens/Home/Home';
+import Login from './screens/Login/Login'
+import Register from './screens/Login/Register'
+import Splash from './screens/Home/splash'
+import WALK from './screens/Home/walkthrough'
 
 function App() {
   return (
     <Block>
-      <Home />
+      <WALK/>
     </Block>
   );
 }

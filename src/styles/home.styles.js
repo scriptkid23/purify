@@ -114,4 +114,38 @@ export const styles = StyleSheet.create({
     red: {
       color: 'red',
     },
+    headertextlogin :{
+      color :'lightblue',
+      fontSize: 22 
+
+    },
+    headerLogin:{
+      paddingTop:190,
+      padding: 50,
+      flex:1,
+      backgroundColor:"#fff",
+      shadowColor: "#000",
+      shadowOffset: {
+        height: 2,
+      }
+    },
+    InputTexxt:{
+      borderColor:'blue',
+      borderWidth:1,
+      backgroundColor:'#fff',
+      borderRadius:15,
+      height:58,
+      width:290,
+      fontSize:18
+     
+           
+    },
+    headerLoginWelcome:{
+      fontFamily:"Aeonik",
+      fontSize:35,
+      fontWeight:"bold",
+      color:"#152383",
+    },
+    
+    
   });
