@@ -21,7 +21,7 @@ import {MyContext} from '../../context/MyContext'
 import { useContext } from 'react/cjs/react.development';
 
 
-function Home() {
+function Home({navigation}) {
   const {data,scanPeripherals, connectToSensor} = useContext(MyContext);
   return (
     <Block>
@@ -68,7 +68,8 @@ function Home() {
                     <Text style={styles.sensorInfo}>{value.id}</Text>
                   </Block>
                   <TouchableOpacity
-                    onPress={connectToSensor}
+                    // onPress={connectToSensor}
+                    onPress={() => navigation.push('dashboard')}
                     style={{
                       alignItems: 'center',
                       backgroundColor: '#374EEE',
