@@ -16,6 +16,20 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* PurifyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PurifyTests.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		AB26BCD8A93248C2841F330B /* Aeonik-Air.otf in Resources */ = {isa = PBXBuildFile; fileRef = 34D268C8F826439AB7CA07AA /* Aeonik-Air.otf */; };
+		E8758EF73A9E4BCD8B15FDEB /* Aeonik-AirItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28B9D66A673E4AAC9DCE4FDA /* Aeonik-AirItalic.otf */; };
+		0A5B7CB80510437E8373DB5A /* Aeonik-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 394F167723BE42719B84E8F9 /* Aeonik-Black.otf */; };
+		68A1946A08D74EA9986E2E3D /* Aeonik-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C9277B9DD9043FDB11B4FA5 /* Aeonik-BlackItalic.otf */; };
+		13CF53166986422CA6425DDC /* Aeonik-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 73E3E22A66B047AAA4785211 /* Aeonik-Bold.otf */; };
+		4229CEDAD1004F858C342FEF /* Aeonik-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3EA07CEBFC64B24956DA0B4 /* Aeonik-BoldItalic.otf */; };
+		A03DA2AEDB3844228800021E /* Aeonik-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7F459A45F8FF4EB29D9315A2 /* Aeonik-Light.otf */; };
+		5D2401CDCADC44D8B7DF43C9 /* Aeonik-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F7B513BE07644CD9AA7F8ED0 /* Aeonik-LightItalic.otf */; };
+		EEE31686761E4A11BA5C2D6D /* Aeonik-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 529086AD21234761A9DB2CC6 /* Aeonik-Medium.otf */; };
+		B3685B0A955E43DFA2D2C332 /* Aeonik-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 51525199D7C146A4B950D7EE /* Aeonik-MediumItalic.otf */; };
+		F75C3D69E0EE45859A4A1351 /* Aeonik-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 88D5E0D213D049BF8BBB2D99 /* Aeonik-Regular.otf */; };
+		0DA76D64C88444FFB47EFAD3 /* Aeonik-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5A4DF5772D1C4248A749DE15 /* Aeonik-RegularItalic.otf */; };
+		47E2BA7B0D49483B9E2FBD9C /* Aeonik-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = FF22EF12E8A1440A815301F2 /* Aeonik-Thin.otf */; };
+		F7F6708A98134AD1B49AA1F4 /* Aeonik-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 562311235F4845F3B0BF5959 /* Aeonik-ThinItalic.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +65,20 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Purify/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		34D268C8F826439AB7CA07AA /* Aeonik-Air.otf */ = {isa = PBXFileReference; name = "Aeonik-Air.otf"; path = "../assets/fonts/Aeonik-Air.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		28B9D66A673E4AAC9DCE4FDA /* Aeonik-AirItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-AirItalic.otf"; path = "../assets/fonts/Aeonik-AirItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		394F167723BE42719B84E8F9 /* Aeonik-Black.otf */ = {isa = PBXFileReference; name = "Aeonik-Black.otf"; path = "../assets/fonts/Aeonik-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6C9277B9DD9043FDB11B4FA5 /* Aeonik-BlackItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-BlackItalic.otf"; path = "../assets/fonts/Aeonik-BlackItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		73E3E22A66B047AAA4785211 /* Aeonik-Bold.otf */ = {isa = PBXFileReference; name = "Aeonik-Bold.otf"; path = "../assets/fonts/Aeonik-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A3EA07CEBFC64B24956DA0B4 /* Aeonik-BoldItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-BoldItalic.otf"; path = "../assets/fonts/Aeonik-BoldItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7F459A45F8FF4EB29D9315A2 /* Aeonik-Light.otf */ = {isa = PBXFileReference; name = "Aeonik-Light.otf"; path = "../assets/fonts/Aeonik-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F7B513BE07644CD9AA7F8ED0 /* Aeonik-LightItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-LightItalic.otf"; path = "../assets/fonts/Aeonik-LightItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		529086AD21234761A9DB2CC6 /* Aeonik-Medium.otf */ = {isa = PBXFileReference; name = "Aeonik-Medium.otf"; path = "../assets/fonts/Aeonik-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		51525199D7C146A4B950D7EE /* Aeonik-MediumItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-MediumItalic.otf"; path = "../assets/fonts/Aeonik-MediumItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		88D5E0D213D049BF8BBB2D99 /* Aeonik-Regular.otf */ = {isa = PBXFileReference; name = "Aeonik-Regular.otf"; path = "../assets/fonts/Aeonik-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5A4DF5772D1C4248A749DE15 /* Aeonik-RegularItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-RegularItalic.otf"; path = "../assets/fonts/Aeonik-RegularItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FF22EF12E8A1440A815301F2 /* Aeonik-Thin.otf */ = {isa = PBXFileReference; name = "Aeonik-Thin.otf"; path = "../assets/fonts/Aeonik-Thin.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		562311235F4845F3B0BF5959 /* Aeonik-ThinItalic.otf */ = {isa = PBXFileReference; name = "Aeonik-ThinItalic.otf"; path = "../assets/fonts/Aeonik-ThinItalic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +168,7 @@
 				00E356EF1AD99517003FC87E /* PurifyTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				BCAD075088AE4BF9B68588C6 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -156,6 +185,28 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		BCAD075088AE4BF9B68588C6 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				34D268C8F826439AB7CA07AA /* Aeonik-Air.otf */,
+				28B9D66A673E4AAC9DCE4FDA /* Aeonik-AirItalic.otf */,
+				394F167723BE42719B84E8F9 /* Aeonik-Black.otf */,
+				6C9277B9DD9043FDB11B4FA5 /* Aeonik-BlackItalic.otf */,
+				73E3E22A66B047AAA4785211 /* Aeonik-Bold.otf */,
+				A3EA07CEBFC64B24956DA0B4 /* Aeonik-BoldItalic.otf */,
+				7F459A45F8FF4EB29D9315A2 /* Aeonik-Light.otf */,
+				F7B513BE07644CD9AA7F8ED0 /* Aeonik-LightItalic.otf */,
+				529086AD21234761A9DB2CC6 /* Aeonik-Medium.otf */,
+				51525199D7C146A4B950D7EE /* Aeonik-MediumItalic.otf */,
+				88D5E0D213D049BF8BBB2D99 /* Aeonik-Regular.otf */,
+				5A4DF5772D1C4248A749DE15 /* Aeonik-RegularItalic.otf */,
+				FF22EF12E8A1440A815301F2 /* Aeonik-Thin.otf */,
+				562311235F4845F3B0BF5959 /* Aeonik-ThinItalic.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -295,6 +346,20 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				AB26BCD8A93248C2841F330B /* Aeonik-Air.otf in Resources */,
+				E8758EF73A9E4BCD8B15FDEB /* Aeonik-AirItalic.otf in Resources */,
+				0A5B7CB80510437E8373DB5A /* Aeonik-Black.otf in Resources */,
+				68A1946A08D74EA9986E2E3D /* Aeonik-BlackItalic.otf in Resources */,
+				13CF53166986422CA6425DDC /* Aeonik-Bold.otf in Resources */,
+				4229CEDAD1004F858C342FEF /* Aeonik-BoldItalic.otf in Resources */,
+				A03DA2AEDB3844228800021E /* Aeonik-Light.otf in Resources */,
+				5D2401CDCADC44D8B7DF43C9 /* Aeonik-LightItalic.otf in Resources */,
+				EEE31686761E4A11BA5C2D6D /* Aeonik-Medium.otf in Resources */,
+				B3685B0A955E43DFA2D2C332 /* Aeonik-MediumItalic.otf in Resources */,
+				F75C3D69E0EE45859A4A1351 /* Aeonik-Regular.otf in Resources */,
+				0DA76D64C88444FFB47EFAD3 /* Aeonik-RegularItalic.otf in Resources */,
+				47E2BA7B0D49483B9E2FBD9C /* Aeonik-Thin.otf in Resources */,
+				F7F6708A98134AD1B49AA1F4 /* Aeonik-ThinItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

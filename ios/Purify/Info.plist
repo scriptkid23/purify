@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,5 +53,22 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Aeonik-Air.otf</string>
+		<string>Aeonik-AirItalic.otf</string>
+		<string>Aeonik-Black.otf</string>
+		<string>Aeonik-BlackItalic.otf</string>
+		<string>Aeonik-Bold.otf</string>
+		<string>Aeonik-BoldItalic.otf</string>
+		<string>Aeonik-Light.otf</string>
+		<string>Aeonik-LightItalic.otf</string>
+		<string>Aeonik-Medium.otf</string>
+		<string>Aeonik-MediumItalic.otf</string>
+		<string>Aeonik-Regular.otf</string>
+		<string>Aeonik-RegularItalic.otf</string>
+		<string>Aeonik-Thin.otf</string>
+		<string>Aeonik-ThinItalic.otf</string>
+	</array>
 </dict>
 </plist>
