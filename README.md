@@ -17,6 +17,13 @@ With ios:
 
 `npx react-native run-ios`
 
+clean project 
+```bash
+    scripts: { 
+    "clean:android": "cd android && ./gradlew clean && cd ../",
+    "clean:ios": "cd ios && xcodebuild clean && cd ../", 
+    }
+```
 Run:
 
 `npm start`
