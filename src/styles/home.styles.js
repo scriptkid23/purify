@@ -130,7 +130,7 @@ export const styles = StyleSheet.create({
       }
     },
     InputTexxt:{
-      borderColor:'blue',
+      borderColor:'#94A1FF',
       borderWidth:1,
       backgroundColor:'#fff',
       borderRadius:15,

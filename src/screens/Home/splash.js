@@ -7,24 +7,24 @@
  */
 
  import React from 'react';
- import {Text, TouchableOpacity, Button, View, StyleSheet,Image} from 'react-native';
+ import {Text, TouchableOpacity, Button, View, StyleSheet,Image,Dimensions} from 'react-native';
  import {Block} from '../../components';
  import {Icon} from '../../constants/media';
  import {styles} from '../../styles/home.styles';
  function Splash() {
+  let screenwith=Dimensions.get('window').width;
+  let screenheight=Dimensions.get('window').height;
     return (
-        <Block>
+      
             
       <Block
       
-      style={{paddingTop:200,paddingLeft:150}}
+      style={{paddingTop:screenheight*1/3,paddingLeft:screenwith*1/2-80}}
       >
         
-        <Image style={{height:100,width:100}} source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}></Image>
-         <Text style={{color:"#152383",fontSize:25,fontWeight:"bold",paddingLeft:20,paddingTop:10}}>Purify</Text>
-         
-      </Block>
-      <Text style={{color:"gray",fontSize:12,fontWeight:"bold",paddingBottom:370,paddingLeft:115}}>Together protect the environment</Text>
+        <Image style={{height:160,width:190}} source={require('../Image/splash.png')}></Image>
+        
+     
 
       </Block>
       

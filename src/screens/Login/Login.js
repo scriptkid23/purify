@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {Text, TouchableOpacity, Button, View, StyleSheet,TextInput} from 'react-native';
+import {Text, TouchableOpacity, Button, View, StyleSheet,TextInput,Dimensions} from 'react-native';
 import {Block} from '../../components';
 import {Icon} from '../../constants/media';
 import {styles} from '../../styles/home.styles';
@@ -33,7 +33,7 @@ function Login() {
           
             paddingTop:70,
           }}>
-            <TextInput placeholderTextColor="gray" placeholder="     Enter your gmail"  style={styles.InputTexxt}></TextInput>
+            <TextInput placeholderTextColor="#94A1FF" placeholder="     Enter your gmail"  style={styles.InputTexxt}></TextInput>
             
           </Block>
           <Block
@@ -43,7 +43,7 @@ function Login() {
           
             paddingTop:20,
           }}>
-            <TextInput placeholderTextColor="gray" placeholder="     Enter your password"   style={styles.InputTexxt}></TextInput>
+            <TextInput placeholderTextColor="#94A1FF" placeholder="     Enter your password"   style={styles.InputTexxt}></TextInput>
           </Block>
           <Block
           noflex
