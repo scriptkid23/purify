@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {Block} from '../../components';
 import {styles} from '../../styles/dashboard.styles';
@@ -11,7 +11,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {Defs, LinearGradient, Stop, Path} from 'react-native-svg';
 import {LineChart, Grid} from '../../components/Charts';
-import * as shape from 'd3-shape'
+import * as shape from 'd3-shape';
+import {MyContext} from '../../context/MyContext';
+import BleManager from 'react-native-ble-manager';
+import {TextDecoder} from 'text-decoding';
+import {stringToBytes} from 'convert-string';
+import CacbonicCard from './card/CacbonicCard';
 
 const data = [30.5, 30, 29, 31, 31.5, 28.9];
 
@@ -19,15 +24,39 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function Dashboard({navigation}) {
-  const Line = ({ line }) => (
+  const {data, scanPeripherals, connectToSensor} = useContext(MyContext);
+  const [value, setValue] = React.useState(0);
+  const getDataFromServer = async () => {
+    const readChracteristic = await BleManager.read(
+      data.currentPeripheralId,
+      data.serviceUUID,
+      data.characteristicUUID,
+    );
+    const utf8decoder = new TextDecoder('utf-8');
+    const utf8Arr = new Uint8Array(readChracteristic);
+    console.log(utf8decoder.decode(utf8Arr));
+    setValue(utf8decoder.decode(utf8Arr));
+  };
+
+  React.useEffect(() => {
+    console.log(JSON.stringify(data));
+    let intervalId = setInterval(() => {
+      getDataFromServer();
+    }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const Line = ({line}) => (
     <Path
-        key={'line'}
-        d={line}
-        stroke={'rgb(134, 65, 244)'}
-        fill={'none'}
-        strokeWidth={3}
+      key={'line'}
+      d={line}
+      stroke={'rgb(134, 65, 244)'}
+      fill={'none'}
+      strokeWidth={3}
     />
-)
+  );
   return (
     <Block>
       <Block row noflex margin={10}>
@@ -92,7 +121,7 @@ export default function Dashboard({navigation}) {
                   fontWeight: 'bold',
                   color: '#132767',
                 }}>
-                30°<Text style={{fontSize: 30}}>C</Text>
+                {value}°<Text style={{fontSize: 30}}>C</Text>
               </Text>
 
               <Block row>
@@ -111,20 +140,10 @@ export default function Dashboard({navigation}) {
                 </Text>
               </Block>
             </Block>
-            <Block>
-            <LineChart
-                style={ { height: 100 } }
-                data={ data }
-                contentInset={ { top: 20, bottom: 20 } }
-                curve={shape.curveNatural}
-                // svg={{ strokeWidth:30 }}
-            >
-                 <Line/>
-            </LineChart>
-            </Block>
           </Block>
         </Block>
       </Block>
+      <CacbonicCard/> 
     </Block>
   );
 }

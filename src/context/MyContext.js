@@ -19,7 +19,8 @@ class MyProvider extends Component {
 
     this.state = {
       counter: 0,
-
+      serviceUUID: '4fafc201-1fb5-459e-8fcc-c5c9c331914b',
+      characteristicUUID: 'beb5483e-36e1-4688-b7f5-ea07361b26a8',
       list: [],
       isScanning: false,
       currentPeripheralId: '',
@@ -39,7 +40,6 @@ class MyProvider extends Component {
     this.setState({isScanning: false});
   };
   connectToSensor = (peripheral, navigation) => {
-    
     if (peripheral) {
       if (peripheral.connected) {
         console.log('disconnect to: ' + peripheral.id);
@@ -86,7 +86,7 @@ class MyProvider extends Component {
   };
   disconnectSensor = () => {
     BleManager.disconnect(this.state.currentPeripheralId);
-  }
+  };
   handleDisconnectedPeripheral = data => {
     let peripheral = peripherals.get(data.peripheral);
     if (peripheral) {

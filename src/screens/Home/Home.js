@@ -18,7 +18,7 @@ import {Block} from '../../components';
 import {Icon} from '../../constants/media';
 import {styles} from '../../styles/home.styles';
 import {MyContext} from '../../context/MyContext'
-import { useContext } from 'react/cjs/react.development';
+import { useContext } from 'react';
 
 
 function Home({navigation}) {
