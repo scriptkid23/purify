@@ -22,12 +22,13 @@ class MyProvider extends Component {
 
       list: [],
       isScanning: false,
+      currentPeripheralId: '',
     };
   }
   scanPeripherals = async () => {
     console.log('waiting...');
     try {
-      this.setState({isScanning:true});
+      this.setState({isScanning: true});
       await BleManager.scan([], 5, true);
     } catch (error) {
       console.log(error);
@@ -35,11 +36,57 @@ class MyProvider extends Component {
   };
   handleStopScan = () => {
     console.log('Scan is stopped');
-    this.setState({isScanning:false});
+    this.setState({isScanning: false});
   };
-  connectToSensor = () => {
-    console.log(this.state.list);
+  connectToSensor = (peripheral, navigation) => {
+    
+    if (peripheral) {
+      if (peripheral.connected) {
+        console.log('disconnect to: ' + peripheral.id);
+        BleManager.disconnect(peripheral.id);
+      } else {
+        BleManager.connect(peripheral.id)
+          .then(() => {
+            let p = peripherals.get(peripheral.id);
+            if (p) {
+              p.connected = true;
+              peripherals.set(peripheral.id, p);
+              // setList();
+              this.setState({list: Array.from(peripherals.values())});
+            }
+            this.setState({currentPeripheralId: peripheral.id});
+            console.log('Connected to ' + peripheral.id);
+            navigation.push('dashboard');
+
+            setTimeout(() => {
+              /* Test read current RSSI value */
+              BleManager.retrieveServices(peripheral.id).then(
+                peripheralData => {
+                  console.log('Retrieved peripheral services', peripheralData);
+
+                  BleManager.readRSSI(peripheral.id).then(rssi => {
+                    console.log('Retrieved actual RSSI value', rssi);
+                    let p = peripherals.get(peripheral.id);
+                    if (p) {
+                      p.rssi = rssi;
+                      peripherals.set(peripheral.id, p);
+                      // setList();
+                      this.setState({list: Array.from(peripherals.values())});
+                    }
+                  });
+                },
+              );
+            }, 900);
+          })
+          .catch(error => {
+            console.log('Connection error', error);
+          });
+      }
+    }
   };
+  disconnectSensor = () => {
+    BleManager.disconnect(this.state.currentPeripheralId);
+  }
   handleDisconnectedPeripheral = data => {
     let peripheral = peripherals.get(data.peripheral);
     if (peripheral) {
@@ -70,7 +117,7 @@ class MyProvider extends Component {
       list: Array.from(peripherals.values()),
     });
   };
-  componentDidMount(){
+  componentDidMount() {
     BleManager.start({showAlert: false});
 
     bleManagerEmitter.addListener(
@@ -107,7 +154,7 @@ class MyProvider extends Component {
       });
     }
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log('unmount');
     bleManagerEmitter.removeEventListener(
       'BleManagerDiscoverPeripheral',
@@ -127,15 +174,14 @@ class MyProvider extends Component {
     );
   }
 
-
-
   render() {
     return (
-      <MyContext.Provider value={{
-        data:this.state,
-        scanPeripherals:this.scanPeripherals,
-        connectToSensor:this.connectToSensor,
-     }}>
+      <MyContext.Provider
+        value={{
+          data: this.state,
+          scanPeripherals: this.scanPeripherals,
+          connectToSensor: this.connectToSensor,
+        }}>
         {this.props.children}
       </MyContext.Provider>
     );

@@ -23,6 +23,10 @@ import { useContext } from 'react/cjs/react.development';
 
 function Home({navigation}) {
   const {data,scanPeripherals, connectToSensor} = useContext(MyContext);
+
+  const connect = (value) => {
+    connectToSensor(value, navigation);
+  };
   return (
     <Block>
       {/* Start Block header */}
@@ -69,7 +73,7 @@ function Home({navigation}) {
                   </Block>
                   <TouchableOpacity
                     // onPress={connectToSensor}
-                    onPress={() => navigation.push('dashboard')}
+                    onPress={() => connect(value)}
                     style={{
                       alignItems: 'center',
                       backgroundColor: '#374EEE',
