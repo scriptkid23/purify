@@ -33,6 +33,7 @@
     "react-native-shared-element": "^0.7.0",
     "react-native-svg": "^12.1.1",
     "react-native-svg-transformer": "^0.14.3",
+    "realm": "^10.4.2",
     "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.3",
     "styled-components": "^5.2.1",
