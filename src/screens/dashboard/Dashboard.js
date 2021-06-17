@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {Block} from '../../components';
 import {styles} from '../../styles/dashboard.styles';
@@ -24,8 +24,13 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function Dashboard({navigation}) {
-  const {data, scanPeripherals, connectToSensor} = useContext(MyContext);
+  const {data, scanPeripherals, connectToSensor,reloadData,DeleteAlll,InsertData } = useContext(MyContext);
   const [value, setValue] = React.useState(0);
+  const [conncected,setconnected]=useState(false);
+  const[mqttcn,setmqttcn]=useState(false);
+  const [DbList,setDbList]=useState([]);
+  const[list,setList]=useState('');
+  
   const getDataFromServer = async () => {
     const readChracteristic = await BleManager.read(
       data.currentPeripheralId,
@@ -34,7 +39,8 @@ export default function Dashboard({navigation}) {
     );
     const utf8decoder = new TextDecoder('utf-8');
     const utf8Arr = new Uint8Array(readChracteristic);
-    console.log(utf8decoder.decode(utf8Arr));
+    console.log(utf8decoder.decode(utf8Arr));//data
+    setList(utf8decoder.decode(utf8Arr));
     setValue(utf8decoder.decode(utf8Arr));
   };
 
@@ -47,6 +53,96 @@ export default function Dashboard({navigation}) {
       clearInterval(intervalId);
     };
   }, []);
+  unsubscribe=null;
+  const mqttConnect=null;
+  React.useEffect(()=>{
+
+    this.unsubscribe = NetInfo.addEventListener(state => {
+    
+      setconnected(state.isConnected);
+    });
+
+
+     
+   if(!conncected){
+     setmqttcn(false);
+   }
+   if(conncected&&!mqttcn){
+    this.mqttConnect = new MQTTConnection()
+    this.mqttConnect.onMQTTConnect = this.onMQTTConnect
+    this.mqttConnect.onMQTTLost = this.onMQTTLost
+    this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
+    this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered
+   
+   
+    this.mqttConnect.connect("broker.emqx.io",8083)
+
+  
+    onMQTTConnect = () => {
+        console.log('App onMQTTConnect')
+        this.mqttConnect.subscribeChannel('huydz')
+        setmqttcn(true);
+       
+    }
+   
+    onMQTTLost = () => {
+        console.log('App onMQTTLost')
+    }
+
+    onMQTTMessageArrived = (message) => {
+        console.log('App onMQTTMessageArrived: ', message);
+        console.log('App onMQTTMessageArrived payloadString: ', message.payloadString);
+    }
+
+    onMQTTMessageDelivered = (message) => {
+        console.log('App onMQTTMessageDelivered: ', message);
+    }
+    if(conncected&&mqttcn){
+      this.mqttConnect.send('huydz',list);
+    }else{
+      var date = new Date().getDate();
+      var month = new Date().getMonth() + 1;
+      var year = new Date().getFullYear(); 
+      var hours = new Date().getHours(); 
+      var min = new Date().getMinutes(); 
+      var sec = new Date().getSeconds(); 
+      var time=sec+":"+min+":"+hours+" "+date+"/"+month+"/"+year;
+         InsertData(list.humidity,list.temperature,time);
+    }
+ 
+  }
+
+  });
+  reloadData=()=>{
+    queryALLTodoList().then((todoLists)=>{
+
+   setDbList(todoLists);
+  
+  }).catch((error)=>{
+    setDbList([]);
+         console.log(error);
+        
+});
+   
+ }
+  React.useEffect(() => {
+   
+    reloadData();
+
+     if(DbList.length>1&&mqttcn&&conncected){
+
+       DbList.forEach((element) => {
+         console.log(element.value);
+         this.mqttConnect.send('huydz',element.value);
+         
+       });
+
+       DeleteAlll();
+  
+     }
+
+  },[mqttcn]);
+  
 
   const Line = ({line}) => (
     <Path

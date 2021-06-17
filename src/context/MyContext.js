@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {insertObject,queryALLTodoList,Deleteall} from '../database/database';
+import NetInfo from "@react-native-community/netinfo";
 import {
   NativeEventEmitter,
   NativeModules,
@@ -26,6 +28,32 @@ class MyProvider extends Component {
       currentPeripheralId: '',
     };
   }
+ 
+
+ DeleteAlll=()=>{
+  Deleteall().then(()=>{
+    setDbList([]);
+      console.log("xóa thành công");
+     
+  }).catch((error)=>{
+      console.log(error);
+  })
+ };
+
+ InsertData=(humidity,temperature,time)=>{
+  const newTodoList ={
+    id:Math.floor(Date.now()/1000),
+    humidity:humidity,
+    done:false,
+    temperature:temperature,
+    timestamp:time
+
+}
+  insertObject(newTodoList).then().catch((error)=>{
+    alert(error);
+});
+ };
+
   scanPeripherals = async () => {
     console.log('waiting...');
     try {
