@@ -1,5 +1,5 @@
-import Block from './Block';
-import Card from './Card';
-import Theme from './Theme';
+import Block from "./Block";
+import Text from "./Text";
+import Card from './Card'
 
-export {Block,Card,Theme};
+export { Block, Text, Card};
