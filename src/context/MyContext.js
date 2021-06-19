@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {insertObject, queryALLTodoList, Deleteall} from '../database/database';
+import {insertObject, Deleteall,findMaxID} from '../database/database';
 import NetInfo from '@react-native-community/netinfo';
 import {
   NativeEventEmitter,
@@ -8,6 +8,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import BleManager from 'react-native-ble-manager';
+import Realm from 'realm';
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -26,23 +27,38 @@ class MyProvider extends Component {
       list: [],
       isScanning: false,
       currentPeripheralId: '',
+     
     };
   }
 
-  InsertData = (humidity, temperature, time) => {
+  InsertData = (list,time ) => {
+  
     const newTodoList = {
-      id: Math.floor(Date.now() / 1000),
-      humidity: humidity,
+  
+   
+      humidity: list.humidity,
       done: false,
-      temperature: temperature,
+      temperature: list.temperature,
       timestamp: time,
     };
     insertObject(newTodoList)
-      .then()
+      .then( 
+        console.log("đã thêm dữ liệu")
+      )
       .catch(error => {
         alert(error);
       });
   };
+  DeleteAlll=()=>{
+    Deleteall().then(()=>{
+     
+        console.log("xóa thành công");
+       
+    }).catch((error)=>{
+        console.log(error);
+    })
+   };
+  
 
   scanPeripherals = async () => {
     console.log('waiting...');
@@ -199,6 +215,8 @@ class MyProvider extends Component {
           data: this.state,
           scanPeripherals: this.scanPeripherals,
           connectToSensor: this.connectToSensor,
+          DeleteAlll:this.DeleteAlll,
+          InsertData:this.InsertData
         }}>
         {this.props.children}
       </MyContext.Provider>

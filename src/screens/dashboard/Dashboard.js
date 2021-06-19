@@ -3,6 +3,7 @@ import {Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {Block} from '../../components';
 import {styles} from '../../styles/dashboard.styles';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import NetInfo from "@react-native-community/netinfo";
 import {
   faAngleLeft,
   faThermometerHalf,
@@ -17,6 +18,10 @@ import BleManager from 'react-native-ble-manager';
 import {TextDecoder} from 'text-decoding';
 import {stringToBytes} from 'convert-string';
 import CacbonicCard from './card/CacbonicCard';
+import  {queryALLTodoList,findMaxID} from '../../database/database'
+import MQTTConnection  from '../../mqtt/mqtt'
+import { timestamp } from 'rxjs/operators';
+import { List } from 'realm';
 
 const data = [30.5, 30, 29, 31, 31.5, 28.9];
 
@@ -28,15 +33,18 @@ export default function Dashboard({navigation}) {
     data,
     scanPeripherals,
     connectToSensor,
-    reloadData,
+   
     DeleteAlll,
     InsertData,
   } = useContext(MyContext);
   const [value, setValue] = React.useState(0);
   const [conncected, setconnected] = useState(false);
   const [mqttcn, setmqttcn] = useState(false);
-  const [DbList, setDbList] = useState([]);
-  const [list, setList] = useState('');
+  const [DbList, setDbList] = useState([])
+  const [list, setList] = useState({ temperature: "32.800000000000004", humidity: "92.60000000000001"});
+  
+
+  unsubscribe=null;
 
   const getDataFromServer = async () => {
     const readChracteristic = await BleManager.read(
@@ -47,20 +55,111 @@ export default function Dashboard({navigation}) {
     const utf8decoder = new TextDecoder('utf-8');
     const utf8Arr = new Uint8Array(readChracteristic);
     console.log(utf8decoder.decode(utf8Arr)); //data
-    setList(utf8decoder.decode(utf8Arr));
+   
+    setList(JSON.parse(utf8decoder.decode(utf8Arr)));
     setValue(utf8decoder.decode(utf8Arr));
   };
-
+  const reloadData=()=>{
+    queryALLTodoList().then((todoLists)=>{
+   setDbList(todoLists);
+  }).catch((error)=>{
+    setDbList([]);
+     
+});
+   
+ }
   React.useEffect(() => {
-    console.log(JSON.stringify(data));
+   
     let intervalId = setInterval(() => {
       getDataFromServer();
+ 
+  
     }, 1000);
     return () => {
       clearInterval(intervalId);
     };
   }, []);
+ 
+  React.useEffect(()=>{
+    this.unsubscribe = NetInfo.addEventListener(state => {
+   
+      setconnected(state.isConnected);
+     
+    });
+    if(!conncected){
+      setmqttcn(false);
+    }
+    if(conncected&&!mqttcn){
+     this.mqttConnect = new MQTTConnection()
+     this.mqttConnect.onMQTTConnect = this.onMQTTConnect
+     this.mqttConnect.onMQTTLost = this.onMQTTLost
+     this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
+     this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered
 
+     this.mqttConnect.connect("broker.emqx.io",8083)
+
+     onMQTTConnect = () => {
+         console.log('App onMQTTConnect')
+     
+        
+         this.mqttConnect.subscribeChannel('huydz')
+         setmqttcn(true);  
+     }
+    
+     onMQTTLost = () => {
+         console.log('App onMQTTLost');
+     }
+ 
+     onMQTTMessageArrived = (message) => {
+         //console.log('App onMQTTMessageArrived: ', message);
+         console.log('App onMQTTMessageArrived payloadString: ', message.payloadString);
+     }
+ 
+     onMQTTMessageDelivered = (message) => {
+        // console.log('App onMQTTMessageDelivered: ', message);
+     }
+
+    
+    }
+
+  });
+  React.useEffect(()=>{
+    reloadData();
+  
+    if(DbList.length>1&&mqttcn&&conncected){
+      DbList.forEach((element) => {
+        
+        this.mqttConnect.send('huydz',JSON.stringify(element));
+      
+      });
+    }
+
+  DeleteAlll();
+  reloadData(); 
+  },[mqttcn]);
+  React.useEffect(()=>{
+   
+   let intervalId = setInterval(() => {
+    var date = new Date();
+    var time=date.getSeconds()+":"+date.getMinutes()+":"+date.getHours()+" "+date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear();
+   console.log(mqttcn);
+   if(conncected&&mqttcn){
+   
+    setList({timestamp:time,temperature:list.temperature,humidity:list.humidity});
+   this.mqttConnect.send('huydz',JSON.stringify(list));
+   }else{
+    
+   
+    InsertData(list,time);
+   }
+
+  }, 1000);
+  return () => {
+    clearInterval(intervalId);
+  };
+ 
+    
+  },[mqttcn,conncected,list]);
   const Line = ({line}) => (
     <Path
       key={'line'}

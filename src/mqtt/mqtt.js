@@ -90,17 +90,17 @@ export default class MQTTConnection {
     }
 
     send(channel = null, payload) {
-        console.log('MQTTConnection send: ')
+        console.log('Dữ liệu gửi : ')
         if (!this.mqtt||!this.mqtt.isConnected()) {
            
-           console.log(12);
-            return;
+           console.log("chưa có kết nối mqtt");
+            return false;
         }
 
         if (!channel || !payload) {
             return false;
         }
-        console.log(`MQTTConnection send publish channel: ${channel}, payload: ${payload} qos: ${this.QOS} retained: ${this.RETAIN}`)
+      
         this.mqtt.publish(channel, payload, this.QOS, this.RETAIN);
     }
 
