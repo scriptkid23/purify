@@ -1,4 +1,5 @@
 import * as Mqtt from 'react-native-native-mqtt';
+import { Buffer } from "buffer"
 
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
@@ -20,7 +21,7 @@ export default class MQTTConnection {
   }
  
   mqttconnect() {
-
+    
 
      this.client = new Mqtt.Client('tcp://iot.sytes.net:1883');
     this.client.connect(
@@ -56,7 +57,7 @@ subscribeChannel() {
     if (!this.client||!this.client.connected ) {
         return;
     }
-   this.client.subscribe(['presence'], [0]);
+   this.client.subscribe(['/v1/devices/me/telemetry'], [0]);
 }
 
 unsubscribeChannel() {
@@ -64,7 +65,7 @@ unsubscribeChannel() {
     if (!this.client||!this.client.connected ) {
         return;
     }
-    this.client.unsubscribe(['presence'], [0]);
+    this.client.unsubscribe(['/v1/devices/me/telemetry'], [0]);
 }
 
 send( mess) {
@@ -76,9 +77,9 @@ send( mess) {
         return;
     }
 
-  
+    var buf = Buffer.from(mess);
     console.log("mqtt send : "+mess)
-    this.client.publish('presence', mess, 0, true);
+    this.client.publish('/v1/devices/me/telemetry',buf, 0, true);
 }
 
 close() {
