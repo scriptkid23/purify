@@ -7,24 +7,36 @@
  */
 
 import React from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  Button,
-  View,
-  StyleSheet
-} from 'react-native';
+import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {Block} from '../../components';
 import {Icon} from '../../constants/media';
 import {styles} from '../../styles/home.styles';
-import {MyContext} from '../../context/MyContext'
-import { useContext } from 'react';
+import {MyContext} from '../../context/MyContext';
+import {useContext} from 'react';
+import Mqtt from 'mqtt';
 
-
+const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
+const defaultConnectOptions = {
+  keepalive: 60,
+  clientId: clientId,
+  protocolId: 'MQTT',
+  protocolVersion: 4,
+  clean: true,
+  reconnectPeriod: 1000,
+  connectTimeout: 30 * 1000,
+  will: {
+    topic: 'WillMsg',
+    payload: 'Connection Closed abnormally..!',
+    qos: 0,
+    retain: false,
+  },
+};
 function Home({navigation}) {
-  const {data,scanPeripherals, connectToSensor} = useContext(MyContext);
-
-  const connect = (value) => {
+  const {data, scanPeripherals, connectToSensor} = useContext(MyContext);
+  React.useEffect(() => {
+    Mqtt.connect('ws://broker.emqx.io:8083/mqtt', defaultConnectOptions);
+  }, []);
+  const connect = value => {
     connectToSensor(value, navigation);
   };
   return (
@@ -44,7 +56,9 @@ function Home({navigation}) {
 
       <Block>
         <Block noflex style={{direction: 'rtl', padding: 20}}>
-          <TouchableOpacity onPress={scanPeripherals} style={styles.btnSearchMini}>
+          <TouchableOpacity
+            onPress={scanPeripherals}
+            style={styles.btnSearchMini}>
             <Icon.Search height={20} />
           </TouchableOpacity>
         </Block>
@@ -72,7 +86,6 @@ function Home({navigation}) {
                     <Text style={styles.sensorInfo}>{value.id}</Text>
                   </Block>
                   <TouchableOpacity
-                    // onPress={connectToSensor}
                     onPress={() => connect(value)}
                     style={{
                       alignItems: 'center',
@@ -94,7 +107,6 @@ function Home({navigation}) {
           );
         })}
       </Block>
-      {/* End Block body  */}
     </Block>
   );
 }
