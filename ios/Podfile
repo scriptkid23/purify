@@ -8,6 +8,8 @@ target 'Purify' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-native-mqtt', :path => '../node_modules/react-native-native-mqtt'
+
   target 'PurifyTests' do
     inherit! :complete
     # Pods for testing

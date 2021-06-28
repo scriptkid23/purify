@@ -34,28 +34,28 @@ const defaultConnectOptions = {
 function Home({navigation}) {
   const {data, scanPeripherals, connectToSensor} = useContext(MyContext);
   React.useEffect(() => {
-    const client = Mqtt.connect('mqtt://test.mosquitto.org:1883', {
-      keepalive: 60,
-      protocolVersion: 4,
-      clean: true,
-      port: 1883,
-      reconnectPeriod: 1000,
-      connectTimeout: 30 * 1000,
-      will: {
-        topic: 'WillMsg',
-        payload: 'Connection Closed abnormally..!',
-        qos: 0,
-        retain: false,
+    const client = new Mqtt.Client('tcp://iot.sytes.net:1883');
+    client.connect(
+      {
+        keepalive: 60,
+        clientId: 'Mobile01',
+        username: 'nhom2',
+        password: 'nckh2021',
+        cleanSession:true,
       },
-    });
+      err => {console.log(error)},
+    );
+    // const client = Mqtt.connect('mqtt://test.mosquitto.org:1883', {
+
+    // });
     console.log(client);
-    client.on('connect', value => {
-      client.subscribe('presence', function (err) {
-        if (!err) {
-          console.log('connection');
-          client.publish('presence', 'Hello mqtt');
-        }
-      });
+    client.on(Mqtt.Event.Message, (topic, message) => {
+      console.log('Mqtt Message:', topic, message.toString());
+    });
+
+    client.on(Mqtt.Event.Connect, () => {
+      console.log('MQTT Connect');
+      client.subscribe(['presence'], [0]);
     });
   }, []);
   const connect = value => {
