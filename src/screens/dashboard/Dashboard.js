@@ -19,7 +19,7 @@ import {TextDecoder} from 'text-decoding';
 import {stringToBytes} from 'convert-string';
 import CacbonicCard from './card/CacbonicCard';
 import  {queryALLTodoList,findMaxID} from '../../database/database'
-import MQTTConnection  from '../../mqtt/mqtt'
+import MQTTConnection  from '../../mqttnode/mqttNodeModul'
 import { timestamp } from 'rxjs/operators';
 import { List } from 'realm';
 
@@ -96,7 +96,7 @@ export default function Dashboard({navigation}) {
      this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived
      this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered
 
-     this.mqttConnect.connect("broker.emqx.io",8083)
+     this.mqttConnect.mqttconnect("broker.emqx.io",8083)
 
      onMQTTConnect = () => {
          console.log('App onMQTTConnect')
@@ -129,7 +129,7 @@ export default function Dashboard({navigation}) {
     if(DbList.length>1&&mqttcn&&conncected){
       DbList.forEach((element) => {
         
-        this.mqttConnect.send('huydz',JSON.stringify(element));
+       // this.mqttConnect.send('huydz',JSON.stringify(element));
       
       });
     }
@@ -146,7 +146,7 @@ export default function Dashboard({navigation}) {
    if(conncected&&mqttcn){
    
     setList({timestamp:time,temperature:list.temperature,humidity:list.humidity});
-   this.mqttConnect.send('huydz',JSON.stringify(list));
+  // this.mqttConnect.send('huydz',JSON.stringify(list));
    }else{
     
    
