@@ -22,7 +22,9 @@ export const insertObject = newTodoList =>
     Realm.open(databaseOptions)
       .then(realm => {
         realm.write(() => {
-          newTodoList.id=realm.objects(SCHEMA).max('id')+1;
+          
+          newTodoList.id=(realm.objects(SCHEMA).max('id')!=null)?realm.objects(SCHEMA).max('id')+1:1;
+         // console.log((realm.objects(SCHEMA).max('id')!=null)?realm.objects(SCHEMA).max('id')+1:1)
           realm.create(SCHEMA, newTodoList);
           resolve(newTodoList);
         });

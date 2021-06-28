@@ -37,6 +37,7 @@ export default function Dashboard({navigation}) {
     DeleteAlll,
     InsertData,
   } = useContext(MyContext);
+
   const [value, setValue] = React.useState(0);
   const [conncected, setconnected] = useState(false);
   const [mqttcn, setmqttcn] = useState(false);
@@ -85,46 +86,38 @@ export default function Dashboard({navigation}) {
     });
     if (!conncected) {
       setmqttcn(false);
+     
+
     }
     if (conncected && !mqttcn) {
       this.mqttConnect = new MQTTConnection();
       this.mqttConnect.onMQTTConnect = this.onMQTTConnect;
       this.mqttConnect.onMQTTLost = this.onMQTTLost;
-      this.mqttConnect.onMQTTMessageArrived = this.onMQTTMessageArrived;
-      this.mqttConnect.onMQTTMessageDelivered = this.onMQTTMessageDelivered;
 
-      this.mqttConnect.mqttconnect('broker.emqx.io', 8083);
-
-      const onMQTTConnect = () => {
-        console.log('App onMQTTConnect');
-
-        this.mqttConnect.subscribeChannel('huydz');
-        setmqttcn(true);
-      };
-
-      const onMQTTLost = () => {
-        console.log('App onMQTTLost');
-      };
-
-      const onMQTTMessageArrived = message => {
-        //console.log('App onMQTTMessageArrived: ', message);
-        console.log(
-          'App onMQTTMessageArrived payloadString: ',
-          message.payloadString,
-        );
-      };
-
-      const onMQTTMessageDelivered = message => {
-        // console.log('App onMQTTMessageDelivered: ', message);
-      };
+      this.mqttConnect.mqttconnect();
+      onMQTTConnect = () => {
+        console.log('App onMQTTConnect')
+        this.mqttConnect.subscribeChannel()
+        setmqttcn(true)
     }
+   
+    onMQTTLost = () => {
+        console.log('App onMQTTLost')
+      
+
+    }
+
+    
+    
+    }
+   
   });
   React.useEffect(() => {
     reloadData();
 
     if (DbList.length > 1 && mqttcn && conncected) {
       DbList.forEach(element => {
-        // this.mqttConnect.send('huydz',JSON.stringify(element));
+        this.mqttConnect.send(JSON.stringify(element));
       });
     }
 
@@ -153,11 +146,11 @@ export default function Dashboard({navigation}) {
           temperature: list.temperature,
           humidity: list.humidity,
         });
-        // this.mqttConnect.send('huydz',JSON.stringify(list));
+         this.mqttConnect.send(JSON.stringify(list));
       } else {
         InsertData(list, time);
       }
-    }, 1000);
+    },1000);
     return () => {
       clearInterval(intervalId);
     };

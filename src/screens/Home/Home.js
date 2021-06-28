@@ -59,6 +59,7 @@ function Home({navigation}) {
       console.log('MQTT Connect');
       client.subscribe(['presence'], [0]);
     });
+    
   }, []);
   const connect = value => {
     connectToSensor(value, navigation);
