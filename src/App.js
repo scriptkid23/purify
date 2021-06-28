@@ -13,7 +13,9 @@ function App() {
     <MyProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="home">
-       
+          <Stack.Screen name="home" options={{headerShown: false}}>
+            {props => <Home {...props}/>}
+          </Stack.Screen>
           <Stack.Screen name="dashboard" options={{headerShown: false}}>
           {props => <Dashboard {...props}/>}
           </Stack.Screen>
