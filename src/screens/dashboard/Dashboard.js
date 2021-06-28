@@ -91,8 +91,7 @@ export default function Dashboard({navigation}) {
     }
     if (conncected && !mqttcn) {
       this.mqttConnect = new MQTTConnection();
-      this.mqttConnect.onMQTTConnect = this.onMQTTConnect;
-      this.mqttConnect.onMQTTLost = this.onMQTTLost;
+     
 
       this.mqttConnect.mqttconnect();
       onMQTTConnect = () => {
@@ -106,7 +105,8 @@ export default function Dashboard({navigation}) {
       
 
     }
-
+    this.mqttConnect.onMQTTConnect = this.onMQTTConnect;
+    this.mqttConnect.onMQTTLost = this.onMQTTLost;
     
     
     }
