@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Animated, SafeAreaView, StyleSheet, View } from "react-native";
+import React, {Component} from 'react';
+import {Animated, SafeAreaView, StyleSheet, View} from 'react-native';
 
-import expoTheme from "./theme";
-import { spacing, parseSpacing, mergeTheme } from "./utils";
+import expoTheme from './Theme';
+import {spacing, parseSpacing, mergeTheme} from './utils';
 
 /**
  * https://facebook.github.io/react-native/docs/view
@@ -127,35 +127,36 @@ class Block extends Component {
       paddingLeft,
       paddingVertical,
       paddingHorizontal,
-      theme
+      theme,
     } = this.props;
-    const { SIZES } = mergeTheme(expoTheme, theme);
+    const {SIZES} = mergeTheme(expoTheme, theme);
 
-    if (type === "margin") {
+    if (type === 'margin') {
       return [
         margin && spacing(type, margin, SIZES.base),
-        marginTop && parseSpacing("marginTop", marginTop, SIZES.base),
-        marginRight && parseSpacing("marginRight", marginRight, SIZES.base),
-        marginBottom && parseSpacing("marginBottom", marginBottom, SIZES.base),
-        marginLeft && parseSpacing("marginLeft", marginLeft, SIZES.base),
+        marginTop && parseSpacing('marginTop', marginTop, SIZES.base),
+        marginRight && parseSpacing('marginRight', marginRight, SIZES.base),
+        marginBottom && parseSpacing('marginBottom', marginBottom, SIZES.base),
+        marginLeft && parseSpacing('marginLeft', marginLeft, SIZES.base),
         marginVertical &&
-          parseSpacing("marginVertical", marginVertical, SIZES.base),
+          parseSpacing('marginVertical', marginVertical, SIZES.base),
         marginHorizontal &&
-          parseSpacing("marginHorizontal", marginHorizontal, SIZES.base)
+          parseSpacing('marginHorizontal', marginHorizontal, SIZES.base),
       ];
     }
 
-    if (type === "padding") {
+    if (type === 'padding') {
       return [
         padding && spacing(type, padding, SIZES.base),
-        paddingTop && parseSpacing("paddingTop", paddingTop, SIZES.base),
-        paddingRight && parseSpacing("paddingRight", paddingRight, SIZES.base),
-        paddingBottom && parseSpacing("paddingBottom", paddingBottom, SIZES.base),
-        paddingLeft && parseSpacing("paddingLeft", paddingLeft, SIZES.base),
+        paddingTop && parseSpacing('paddingTop', paddingTop, SIZES.base),
+        paddingRight && parseSpacing('paddingRight', paddingRight, SIZES.base),
+        paddingBottom &&
+          parseSpacing('paddingBottom', paddingBottom, SIZES.base),
+        paddingLeft && parseSpacing('paddingLeft', paddingLeft, SIZES.base),
         paddingVertical &&
-          parseSpacing("paddingVertical", paddingVertical, SIZES.base),
+          parseSpacing('paddingVertical', paddingVertical, SIZES.base),
         paddingHorizontal &&
-          parseSpacing("paddingHorizontal", paddingHorizontal, SIZES.base)
+          parseSpacing('paddingHorizontal', paddingHorizontal, SIZES.base),
       ];
     }
   }
@@ -200,20 +201,20 @@ class Block extends Component {
     } = this.props;
 
     const excludeProps = [
-      "margin",
-      "marginTop",
-      "marginRight",
-      "marginBottom",
-      "marginLeft",
-      "marginVertical",
-      "marginHorizontal",
-      "padding",
-      "paddingTop",
-      "paddingRight",
-      "paddingBottom",
-      "paddingLeft",
-      "paddingVertical",
-      "paddingHorizontal"
+      'margin',
+      'marginTop',
+      'marginRight',
+      'marginBottom',
+      'marginLeft',
+      'marginVertical',
+      'marginHorizontal',
+      'padding',
+      'paddingTop',
+      'paddingRight',
+      'paddingBottom',
+      'paddingLeft',
+      'paddingVertical',
+      'paddingHorizontal',
     ];
     const extraProps = Object.keys(props).reduce((prop, key) => {
       if (!excludeProps.includes(`${key}`)) {
@@ -222,14 +223,14 @@ class Block extends Component {
       return prop;
     }, {});
 
-    const { SIZES, COLORS } = mergeTheme(expoTheme, theme);
-    const marginSpacing = this.getSpacings("margin");
-    const paddingSpacing = this.getSpacings("padding");
+    const {SIZES, COLORS} = mergeTheme(expoTheme, theme);
+    const marginSpacing = this.getSpacings('margin');
+    const paddingSpacing = this.getSpacings('padding');
 
     const blockStyles = StyleSheet.flatten([
       styles.block,
-      flex && { flex: flex === true ? 1 : flex },
-      (!flex || noflex) && { flex: 0 },
+      flex && {flex: flex === true ? 1 : flex},
+      (!flex || noflex) && {flex: 0},
       row && styles.row,
       column && styles.column,
       center && styles.center,
@@ -244,26 +245,26 @@ class Block extends Component {
       shadow && {
         elevation,
         shadowColor: COLORS.black,
-        shadowOffset: { width: 0, height: elevation - 1 },
+        shadowOffset: {width: 0, height: elevation - 1},
         shadowOpacity: 0.1,
-        shadowRadius: elevation
+        shadowRadius: elevation,
       },
-      space && { justifyContent: `space-${space}` },
-      card && { borderRadius: SIZES.border },
-      radius && { borderRadius: radius },
+      space && {justifyContent: `space-${space}`},
+      card && {borderRadius: SIZES.border},
+      radius && {borderRadius: radius},
       // color shortcuts
-      primary && { backgroundColor: COLORS.primary },
-      secondary && { backgroundColor: COLORS.secondary },
-      tertiary && { backgroundColor: COLORS.tertiary },
-      black && { backgroundColor: COLORS.black },
-      white && { backgroundColor: COLORS.white },
-      gray && { backgroundColor: COLORS.gray },
-      error && { backgroundColor: COLORS.error },
-      warning && { backgroundColor: COLORS.warning },
-      success && { backgroundColor: COLORS.success },
-      info && { backgroundColor: COLORS.info },
-      color && { backgroundColor: color }, // custom backgroundColor
-      style // rewrite predefined styles
+      primary && {backgroundColor: COLORS.primary},
+      secondary && {backgroundColor: COLORS.secondary},
+      tertiary && {backgroundColor: COLORS.tertiary},
+      black && {backgroundColor: COLORS.black},
+      white && {backgroundColor: COLORS.white},
+      gray && {backgroundColor: COLORS.gray},
+      error && {backgroundColor: COLORS.error},
+      warning && {backgroundColor: COLORS.warning},
+      success && {backgroundColor: COLORS.success},
+      info && {backgroundColor: COLORS.info},
+      color && {backgroundColor: color}, // custom backgroundColor
+      style, // rewrite predefined styles
     ]);
 
     if (animated) {
@@ -312,38 +313,38 @@ Block.defaultProps = {
   animated: false,
   safe: false,
   style: {},
-  theme: {}
+  theme: {},
 };
 
 export default Block;
 
 export const styles = StyleSheet.create({
   block: {
-    flex: 1
+    flex: 1,
   },
   row: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   column: {
-    flexDirection: "column"
+    flexDirection: 'column',
   },
   center: {
-    alignItems: "center"
+    alignItems: 'center',
   },
   middle: {
-    justifyContent: "center"
+    justifyContent: 'center',
   },
   left: {
-    justifyContent: "flex-start"
+    justifyContent: 'flex-start',
   },
   right: {
-    justifyContent: "flex-end"
+    justifyContent: 'flex-end',
   },
   top: {
-    justifyContent: "flex-start"
+    justifyContent: 'flex-start',
   },
   bottom: {
-    justifyContent: "flex-end"
+    justifyContent: 'flex-end',
   },
-  wrap: { flexWrap: "wrap" }
+  wrap: {flexWrap: 'wrap'},
 });

@@ -1,5 +1,5 @@
 import rgba from "./rgba.js";
-import theme from "../theme";
+import theme from "../Theme";
 import {
   getMargins,
   getPaddings,
