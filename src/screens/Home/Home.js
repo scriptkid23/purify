@@ -41,9 +41,11 @@ function Home({navigation}) {
         clientId: 'Mobile01',
         username: 'nhom2',
         password: 'nckh2021',
-        cleanSession:true,
+        cleanSession: true,
       },
-      err => {console.log(error)},
+      err => {
+        console.log(err);
+      },
     );
     // const client = Mqtt.connect('mqtt://test.mosquitto.org:1883', {
 
