@@ -1,4 +1,4 @@
-import {connect} from 'mqtt/dist/mqtt';
+import * as Mqtt from 'react-native-native-mqtt';
 import uuid from 'react-native-uuid';
 import {AsyncStorage} from '@react-native-community/async-storage';
 
@@ -35,7 +35,7 @@ export default class MQTTConnection {
 
     //var mien='ws://'+host+':'+port+'/mqtt';
 
-    this.client = connect(host1, defaultConnectOptions);
+    this.client = Mqtt.connect(host1, defaultConnectOptions);
     this.on('connect', () => {
       console.log('oke');
     });

@@ -13,7 +13,7 @@ import {Icon} from '../../constants/media';
 import {styles} from '../../styles/home.styles';
 import {MyContext} from '../../context/MyContext';
 import {useContext} from 'react';
-import Mqtt from 'mqtt';
+import * as Mqtt from 'react-native-native-mqtt';
 
 const clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8);
 const defaultConnectOptions = {
@@ -34,7 +34,29 @@ const defaultConnectOptions = {
 function Home({navigation}) {
   const {data, scanPeripherals, connectToSensor} = useContext(MyContext);
   React.useEffect(() => {
-    Mqtt.connect('ws://broker.emqx.io:8083/mqtt', defaultConnectOptions);
+    const client = Mqtt.connect('mqtt://test.mosquitto.org:1883', {
+      keepalive: 60,
+      protocolVersion: 4,
+      clean: true,
+      port: 1883,
+      reconnectPeriod: 1000,
+      connectTimeout: 30 * 1000,
+      will: {
+        topic: 'WillMsg',
+        payload: 'Connection Closed abnormally..!',
+        qos: 0,
+        retain: false,
+      },
+    });
+    console.log(client);
+    client.on('connect', value => {
+      client.subscribe('presence', function (err) {
+        if (!err) {
+          console.log('connection');
+          client.publish('presence', 'Hello mqtt');
+        }
+      });
+    });
   }, []);
   const connect = value => {
     connectToSensor(value, navigation);
