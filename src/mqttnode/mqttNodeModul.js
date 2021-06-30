@@ -21,14 +21,14 @@ export default class MQTTConnection {
   }
  
   mqttconnect() {
-    
+   // 'tcp://iot.sytes.net:1883'
 
      this.client = new Mqtt.Client('tcp://iot.sytes.net:1883');
     this.client.connect(
       {
         keepalive: 60,
         clientId: 'Mobile01',
-        username: 'nhom2',
+        username: 'ktht',
         password: 'nckh2021',
         cleanSession: true,
        
@@ -77,9 +77,9 @@ send( mess) {
         return;
     }
 
-    var buf = Buffer.from(mess);
+    //var buf = Buffer.from(mess);
     console.log("mqtt send : "+mess)
-    this.client.publish('/v1/devices/me/telemetry',buf, 0, true);
+    this.client.publish('v1/devices/me/telemetry',Buffer.from(mess), 0, true);
 }
 
 close() {

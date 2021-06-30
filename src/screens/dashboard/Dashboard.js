@@ -43,8 +43,8 @@ export default function Dashboard({navigation}) {
   const [mqttcn, setmqttcn] = useState(false);
   const [DbList, setDbList] = useState([]);
   const [list, setList] = useState({
-    temperature: '32.800000000000004',
-    humidity: '92.60000000000001',
+    "temperature": '32.80',
+     "humidity": '92.60'
   });
 
   var unsubscribe = null;
@@ -99,7 +99,7 @@ export default function Dashboard({navigation}) {
         this.mqttConnect.subscribeChannel()
         setmqttcn(true)
     }
-   
+     
     onMQTTLost = () => {
         console.log('App onMQTTLost')
       
