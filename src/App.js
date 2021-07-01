@@ -12,10 +12,12 @@ function App() {
   return (
     <MyProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="home">
-         
+        <Stack.Navigator initialRouteName="dashboard">
+          <Stack.Screen name="home" options={{headerShown: false}}>
+            {props => <Home {...props} />}
+          </Stack.Screen>
           <Stack.Screen name="dashboard" options={{headerShown: false}}>
-          {props => <Dashboard {...props}/>}
+            {props => <Dashboard {...props} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
