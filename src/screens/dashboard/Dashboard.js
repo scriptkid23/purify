@@ -38,13 +38,22 @@ export default function Dashboard({navigation}) {
     InsertData,
   } = useContext(MyContext);
 
+  const tempInject = () => {
+    let temp = (Math.random() * 10 + 30).toFixed(2);
+     return temp; 
+  }
+  const humidInject = () => {
+    let humid = (Math.random() * 10 + 80).toFixed(2);
+    return humid;
+  }
+
   const [value, setValue] = React.useState(0);
   const [conncected, setconnected] = useState(false);
   const [mqttcn, setmqttcn] = useState(false);
   const [DbList, setDbList] = useState([]);
   const [list, setList] = useState({
-    "temperature": '32.80',
-     "humidity": '92.60'
+    "temperature": 0 ,
+    "humidity": 0
   });
 
   var unsubscribe = null;
@@ -143,8 +152,8 @@ export default function Dashboard({navigation}) {
       if (conncected && mqttcn) {
         setList({
           timestamp: time,
-          temperature: list.temperature,
-          humidity: list.humidity,
+          temperature: tempInject() ,
+          humidity: humidInject(),
         });
          this.mqttConnect.send(JSON.stringify(list));
       } else {
@@ -180,7 +189,7 @@ export default function Dashboard({navigation}) {
             fontSize: 29,
             color: '#132767',
             fontFamily: 'Aeonik',
-            letterSpacing: 50,
+            letterSpacing: 1,
             fontWeight: 'bold',
           }}>
           Dashboard
@@ -228,7 +237,7 @@ export default function Dashboard({navigation}) {
                   fontWeight: 'bold',
                   color: '#132767',
                 }}>
-                {value}°<Text style={{fontSize: 30}}>C</Text>
+                {list.temperature}°<Text style={{fontSize: 30}}>C</Text>
               </Text>
 
               <Block row>
@@ -243,7 +252,7 @@ export default function Dashboard({navigation}) {
                     fontSize: 30,
                     color: '#FF3061',
                   }}>
-                  3<Text style={{fontSize: 20}}>%</Text>
+                  {list.humidity}<Text style={{fontSize: 20}}>%</Text>
                 </Text>
               </Block>
             </Block>
