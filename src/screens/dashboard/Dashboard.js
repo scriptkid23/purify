@@ -22,6 +22,7 @@ import {queryALLTodoList, findMaxID} from '../../database/database';
 import MQTTConnection from '../../mqttnode/mqttNodeModul';
 import {timestamp} from 'rxjs/operators';
 import {List} from 'realm';
+import { random } from 'lodash';
 
 const data = [30.5, 30, 29, 31, 31.5, 28.9];
 
@@ -61,6 +62,7 @@ export default function Dashboard({navigation}) {
 
     setList(JSON.parse(utf8decoder.decode(utf8Arr)));
     setValue(utf8decoder.decode(utf8Arr));
+   
   };
   const reloadData = () => {
     queryALLTodoList()
@@ -143,9 +145,10 @@ export default function Dashboard({navigation}) {
       if (conncected && mqttcn) {
         setList({
           timestamp: time,
-          temperature: list.temperature,
-          humidity: list.humidity,
+          temperature: Math.floor(Math.random()*(35 - 30 + 1) + 30)+Math.floor(Math.random()*100)/100,
+          humidity: Math.floor(Math.random()*(90 - 80 + 1) + 80)+Math.floor(Math.random()*100)/100,
         });
+
          this.mqttConnect.send(JSON.stringify(list));
       } else {
         InsertData(list, time);

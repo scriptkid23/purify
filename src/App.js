@@ -12,10 +12,17 @@ function App() {
   return (
     <MyProvider>
       <NavigationContainer>
+<<<<<<< Updated upstream
         <Stack.Navigator initialRouteName="dashboard">
           <Stack.Screen name="home" options={{headerShown: false}}>
             {props => <Home {...props} />}
           </Stack.Screen>
+=======
+        <Stack.Navigator initialRouteName="home">
+           {/*<Stack.Screen name="home" options={{headerShown: false}}>
+          {props => <Home {...props}/>}
+  </Stack.Screen>*/}
+>>>>>>> Stashed changes
           <Stack.Screen name="dashboard" options={{headerShown: false}}>
             {props => <Dashboard {...props} />}
           </Stack.Screen>
